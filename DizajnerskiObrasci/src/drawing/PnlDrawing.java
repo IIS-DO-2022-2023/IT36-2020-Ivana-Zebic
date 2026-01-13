@@ -73,27 +73,35 @@ public class PnlDrawing extends JPanel{
 				}
 			}else if (frame.getTglbtnRectangle().isSelected()) {
 				DlgRectangle dlg=new DlgRectangle();
-				dlg.setModal(true);
 				dlg.txtXulp.setText(Integer.toString(e.getX()));
 				dlg.txtYulp.setText(Integer.toString(e.getY()));
 				dlg.setVisible(true);
-					shapes.add(new Rectangle(dlg.getRectNew().getUpperLeftPoint(), dlg.getRectNew().getHeight(), dlg.getRectNew().getWidth(), frame.getActiveColor(), frame.getActiveInnerColor()));
+				Rectangle r = dlg.getRectNew();
+			    if (r != null && r.getUpperLeftPoint() != null) {
+			        shapes.add(r);   
+			    }
 	
 			}else if (frame.getTglbtnCircle().isSelected()) {
 				DlgCircle dlg=new DlgCircle();
 				dlg.txtXcoord.setText(Integer.toString(e.getX()));
 				dlg.txtYcoord.setText(Integer.toString(e.getY()));
-				
 				dlg.setVisible(true);
-				shapes.add(new Circle(dlg.getCircleNew().getCenter(),dlg.getCircleNew().getRadius(), frame.getActiveColor(), frame.getActiveInnerColor()));
+				Circle c = dlg.getCircleNew();
+				if (c != null && c.getCenter() != null) {
+					shapes.add(c);
+				}
+				//shapes.add(new Circle(dlg.getCircleNew().getCenter(),dlg.getCircleNew().getRadius(), frame.getActiveColor(), frame.getActiveInnerColor()));
 				
 			} else if (frame.getTglbtnDonut().isSelected()) {
 				DlgDonut dlg = new DlgDonut();
 				dlg.txtXcenter.setText(Integer.toString(e.getX()));
 				dlg.txtYcenter.setText(Integer.toString(e.getY()));
 				dlg.setVisible(true);
-				
-				shapes.add(new Donut(dlg.getDonutNew().getCenter(), dlg.getDonutNew().getRadius(), dlg.getDonutNew().getInnerRadius(), frame.getActiveColor(), frame.getActiveInnerColor()));
+				Donut d = dlg.getDonutNew();
+				if (d != null && d.getCenter() != null) {
+					shapes.add(d);
+				}
+				//shapes.add(new Donut(dlg.getDonutNew().getCenter(), dlg.getDonutNew().getRadius(), dlg.getDonutNew().getInnerRadius(), frame.getActiveColor(), frame.getActiveInnerColor()));
 		
 			}
 		}

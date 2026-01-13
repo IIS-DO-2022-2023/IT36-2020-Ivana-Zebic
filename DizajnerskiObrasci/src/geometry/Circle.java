@@ -68,17 +68,18 @@ public class Circle extends SurfaceShape {
 	}
 
 	public void fill(Graphics g) {
-		g.setColor(getInnerColor());
+		Color in = getInnerColor();
+	    if (in == null) in = Color.WHITE;
+	    
+		g.setColor(in);
 		g.fillOval(this.center.getX()- radius + 1, this.center.getY() - radius + 1, (radius * 2) - 2, (radius * 2) - 2);
 	}
 	
 	@Override
 	public void draw(Graphics g) {
+		this.fill(g);
 		g.setColor(getColor());
 		g.drawOval(center.getX() - radius, center.getY() - radius, radius * 2, radius * 2);
-		fill(g);
-		
-		
 		if (selected) {
 			g.setColor(Color.BLUE);
 			g.drawRect(center.getX() - 2, center.getY() - 2, 4, 4);

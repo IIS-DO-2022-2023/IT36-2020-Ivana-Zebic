@@ -104,10 +104,11 @@ public class FrmDrawing extends JFrame {
 		btnActiveEdgeColor.setBackground(SystemColor.inactiveCaptionBorder);
 		btnActiveEdgeColor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				activeColor = JColorChooser.showDialog(null, "Choose edge color", Color.BLACK);
-				if (activeColor != null) {
-					panel_3.setBackground(activeColor);
-				}
+				Color chosen = JColorChooser.showDialog(null, "Choose edge color", activeColor);
+		        if (chosen != null) {
+		            activeColor = chosen;
+		            panel_3.setBackground(activeColor);
+		        }
 			}
 		});
 		JPanel panel_2 = new JPanel();
@@ -121,10 +122,11 @@ public class FrmDrawing extends JFrame {
 		JButton btnActiveInnerColor = new JButton("Active Inner Color");
 		btnActiveInnerColor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				activeInnerColor = JColorChooser.showDialog(null, "Choose inner color", Color.WHITE);
-				if (activeInnerColor != null) {
-					panel_4.setBackground(activeInnerColor);
-				}
+				Color chosen = JColorChooser.showDialog(null, "Choose inner color", activeInnerColor);
+		        if (chosen != null) {
+		            activeInnerColor = chosen;
+		            panel_4.setBackground(activeInnerColor);
+		        }
 			}
 		});
 		panel_2.add(btnActiveInnerColor);
@@ -181,9 +183,7 @@ public class FrmDrawing extends JFrame {
 						dlg.setVisible(true);
 						panel_3.setBackground(activeColor);
 						panel_4.setBackground(activeInnerColor);
-					}
-					
-					else if (selected instanceof Circle) {
+					}else if (selected instanceof Circle) {
 						Circle circle = (Circle) selected;
 						DlgCircle dlg = new DlgCircle();
 						dlg.setCircleNew(circle);

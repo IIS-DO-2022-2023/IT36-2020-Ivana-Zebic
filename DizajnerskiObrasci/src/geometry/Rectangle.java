@@ -81,14 +81,18 @@ public class Rectangle extends SurfaceShape {
 
 	@Override
 	public void fill(Graphics g) {
-		g.setColor(getInnerColor());
+		Color in = getInnerColor();
+	    if (in == null) in = Color.WHITE;
+	    
+		g.setColor(in);
 		g.fillRect(this.upperLeftPoint.getX() + 1, this.getUpperLeftPoint().getY() + 1, width - 1, height - 1);
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(getColor());
+		
 		this.fill(g);
+		g.setColor(getColor());
 		g.drawRect(upperLeftPoint.getX(), upperLeftPoint.getY(), width, height);
 		if (selected) {
 			g.setColor(Color.blue);
