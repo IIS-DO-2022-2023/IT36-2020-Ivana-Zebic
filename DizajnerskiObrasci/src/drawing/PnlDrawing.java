@@ -122,11 +122,11 @@ public class PnlDrawing extends JPanel{
 				((Line)s).draw(g);
 			} else if (s instanceof Rectangle) {
 				((Rectangle)s).draw(g);
-			} else if (s instanceof Circle) {
-				((Circle)s).draw(g);
 			} else if (s instanceof Donut) {
 				((Donut)s).draw(g);
-			}
+			} else if (s instanceof Circle) {
+				((Circle)s).draw(g);
+			} 
 		}
 	}
 	

@@ -2,6 +2,10 @@ package geometry;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Area;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 
 public class Donut extends Circle {
 	private int innerRadius;
@@ -69,24 +73,57 @@ public class Donut extends Circle {
 	
 	@Override
 	public void fill(Graphics g) {
-		super.fill(g);
-		g.setColor(Color.WHITE);
-		g.fillOval(getCenter().getX() - getInnerRadius(), getCenter().getY() - getInnerRadius(), getInnerRadius() * 2, getInnerRadius() * 2);
-		
+		/* Metoda za crtanje kruga sa rupom ali rupa nije transparentno
+		 * super.fill(g); g.setColor(Color.WHITE); g.fillOval(getCenter().getX() -
+		 * getInnerRadius(), getCenter().getY() - getInnerRadius(), getInnerRadius() *
+		 * 2, getInnerRadius() * 2);
+		 */
 		/*
 		 * Color bg = g.getColor(); g.setColor(Color.WHITE);
 		 * g.fillOval(getCenter().getX() - getInnerRadius(), getCenter().getY() -
 		 * getInnerRadius(), getInnerRadius() * 2, getInnerRadius() * 2);
 		 */
+		Graphics2D g2 = (Graphics2D) g;
+		
+		Color in = getInnerColor();
+	    if (in == null) in = Color.WHITE;
+	    
+	    Shape outer = new Ellipse2D.Double(
+	            getCenter().getX() - getRadius() + 1,
+	            getCenter().getY() - getRadius() + 1,
+	            getRadius() * 2 - 2,
+	            getRadius() * 2 - 2
+	    );
+	    
+	    Shape inner = new Ellipse2D.Double(
+	            getCenter().getX() - innerRadius,
+	            getCenter().getY() - innerRadius,
+	            innerRadius * 2,
+	            innerRadius * 2
+	    );
+	    
+	    Area ring = new Area(outer);
+	    ring.subtract(new Area(inner));
+	    g2.setColor(in);
+	    g2.fill(ring);
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		super.draw(g);
+		Graphics2D g2 = (Graphics2D) g;
 		Color edge = getColor();
 		if(edge == null) edge = Color.BLACK;
-		g.setColor(edge);
-		g.drawOval(center.getX() - innerRadius, center.getY() - innerRadius, innerRadius * 2, innerRadius * 2);
+		
+		g2.setColor(edge);
+		
+		g2.draw(new Ellipse2D.Double(
+	            getCenter().getX() - innerRadius,
+	            getCenter().getY() - innerRadius,
+	            innerRadius * 2,
+	            innerRadius * 2
+	    ));
+		//g.drawOval(center.getX() - innerRadius, center.getY() - innerRadius, innerRadius * 2, innerRadius * 2);
 		
 		//g.drawOval(getCenter().getX() - innerRadius, getCenter().getY() - innerRadius, innerRadius * 2, innerRadius * 2);
 		/*if (selected) {
