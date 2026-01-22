@@ -1,12 +1,19 @@
-package drawing;
+package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 
 import geometry.Circle;
@@ -15,15 +22,14 @@ import geometry.Line;
 import geometry.Point;
 import geometry.Rectangle;
 import geometry.Shape;
-
-import javax.swing.JToggleButton;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JColorChooser;
-
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import mvc.controller.DrawingController;
+import mvc.model.DrawingModel;
+import mvc.view.DrawingView;
+import ui.dialogs.DlgCircle;
+import ui.dialogs.DlgDonut;
+import ui.dialogs.DlgLine;
+import ui.dialogs.DlgPoint;
+import ui.dialogs.DlgRectangle;
 
 public class FrmDrawing extends JFrame {
 
@@ -40,7 +46,10 @@ public class FrmDrawing extends JFrame {
 	private JToggleButton tglbtnDonut;
 	private JToggleButton tglbtnDraw;
 
-	private PnlDrawing pnlDrawing = new PnlDrawing(this);
+	//private DrawingView pnlDrawing = new DrawingView(this);
+	private DrawingModel model;
+	private DrawingView view;
+	private DrawingController controller;
 
 	private Color activeColor = Color.BLACK;
 	private Color activeInnerColor = Color.WHITE;
@@ -56,7 +65,7 @@ public class FrmDrawing extends JFrame {
 				try {
 					FrmDrawing frame = new FrmDrawing();
 					frame.setVisible(true);
-				} catch (Exception e) {
+					} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -74,7 +83,11 @@ public class FrmDrawing extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-
+		
+		model = new DrawingModel();
+		view = new DrawingView(this, model);
+		controller = new DrawingController(model,view,this);
+		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
 		JPanel panel_3 = new JPanel();
@@ -148,7 +161,7 @@ public class FrmDrawing extends JFrame {
 		JButton btnModify = new JButton("Modify");
 		btnModify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Shape selected = pnlDrawing.getSelected();
+				Shape selected = model.getSelected();
 				if (selected != null) {
 					if (selected instanceof Point) {
 						Point point = (Point) selected;
@@ -193,7 +206,7 @@ public class FrmDrawing extends JFrame {
 						panel_4.setBackground(activeInnerColor);
 					} 
 				}
-				pnlDrawing.repaint();
+				view.repaint();
 			}
 		});
 		panel_1.add(btnModify);
@@ -202,13 +215,13 @@ public class FrmDrawing extends JFrame {
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String[] options = { "Yes", "No" };
-				Shape selected = pnlDrawing.getSelected();
+				Shape selected = model.getSelected();
 				if (selected != null) {
 					int option = JOptionPane.showOptionDialog(null, "Are you sure?", "WARNING!", JOptionPane.OK_OPTION,
 							JOptionPane.ERROR_MESSAGE, null, options, options[0]);
 					if (option == 0) {
-						pnlDrawing.getShapes().remove(selected);
-						pnlDrawing.repaint();
+						model.getShapes().remove(selected);
+						view.repaint();
 					}
 				}
 			}
@@ -223,8 +236,8 @@ public class FrmDrawing extends JFrame {
 		});
 		panel_1.add(btnExit);
 
-		pnlDrawing.setBackground(Color.WHITE);
-		contentPane.add(pnlDrawing, BorderLayout.CENTER);
+		view.setBackground(Color.WHITE);
+		contentPane.add(view, BorderLayout.CENTER);
 
 		panel.repaint();
 	}

@@ -1,4 +1,4 @@
-package drawing;
+package ui.dialogs;
 
 import javax.swing.colorchooser.*;
 import java.awt.BorderLayout;
