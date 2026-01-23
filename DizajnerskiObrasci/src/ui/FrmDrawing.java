@@ -85,8 +85,9 @@ public class FrmDrawing extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		model = new DrawingModel();
-		view = new DrawingView(this, model);
+		view = new DrawingView(model);
 		controller = new DrawingController(model,view,this);
+		view.setController(controller);
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
@@ -95,22 +96,27 @@ public class FrmDrawing extends JFrame {
 		tglbtnPoint = new JToggleButton("Point");
 		panel.add(tglbtnPoint);
 		btnShapes.add(tglbtnPoint);
-
+		tglbtnPoint.addActionListener(e -> controller.setTool(DrawingController.Tool.POINT));
+		
 		tglbtnLine = new JToggleButton("Line");
 		panel.add(tglbtnLine);
 		btnShapes.add(tglbtnLine);
+		tglbtnLine.addActionListener(e -> controller.setTool(DrawingController.Tool.LINE));
 
 		tglbtnRectangle = new JToggleButton("Rectangle");
 		panel.add(tglbtnRectangle);
 		btnShapes.add(tglbtnRectangle);
+		tglbtnRectangle.addActionListener(e -> controller.setTool(DrawingController.Tool.RECTANGLE));
 
 		tglbtnCircle = new JToggleButton("Circle");
 		panel.add(tglbtnCircle);
 		btnShapes.add(tglbtnCircle);
+		tglbtnCircle.addActionListener(e -> controller.setTool(DrawingController.Tool.CIRCLE));
 
 		tglbtnDonut = new JToggleButton("Donut");
 		panel.add(tglbtnDonut);
 		btnShapes.add(tglbtnDonut);
+		tglbtnDonut.addActionListener(e -> controller.setTool(DrawingController.Tool.DONUT));
 
 		//JPanel panel_3 = new JPanel();
 		JButton btnActiveEdgeColor = new JButton("Active Edge Color");
@@ -121,6 +127,7 @@ public class FrmDrawing extends JFrame {
 		        if (chosen != null) {
 		            activeColor = chosen;
 		            panel_3.setBackground(activeColor);
+		            controller.setActiveEdgeColor(activeColor);
 		        }
 			}
 		});
@@ -139,6 +146,7 @@ public class FrmDrawing extends JFrame {
 		        if (chosen != null) {
 		            activeInnerColor = chosen;
 		            panel_4.setBackground(activeInnerColor);
+		            controller.setActiveInnerColor(activeInnerColor);
 		        }
 			}
 		});
@@ -153,10 +161,12 @@ public class FrmDrawing extends JFrame {
 		tglbtnDraw = new JToggleButton("Draw");
 		panel_1.add(tglbtnDraw);
 		btnMode.add(tglbtnDraw);
-
+		tglbtnDraw.addActionListener(e -> controller.setMode(DrawingController.Mode.DRAW));
+		
 		tglbtnSelect = new JToggleButton("Select");
 		panel_1.add(tglbtnSelect);
 		btnMode.add(tglbtnSelect);
+		tglbtnSelect.addActionListener(e -> controller.setMode(DrawingController.Mode.SELECT));
 
 		JButton btnModify = new JButton("Modify");
 		btnModify.addActionListener(new ActionListener() {
