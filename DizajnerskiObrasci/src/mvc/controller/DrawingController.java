@@ -24,10 +24,10 @@ public class DrawingController {
     private final FrmDrawing frame;
     
     public enum Mode {DRAW, SELECT}
-    public enum Tool {POINT, LINE, RECTANGLE, CIRCLE, DONUT}
+    public enum Tool {NONE, POINT, LINE, RECTANGLE, CIRCLE, DONUT}
     
     private Mode mode = Mode.DRAW;
-    private Tool tool = Tool.POINT;
+    private Tool tool = Tool.NONE;
     
     private Color activeEdgeColor = Color.BLACK;
     private Color activeInnerColor = Color.WHITE;
@@ -71,6 +71,9 @@ public class DrawingController {
         if (mode == Mode.SELECT) {
             handleSelect(x, y);
         } else {
+        	if (tool == Tool.NONE) {
+        		return; // ne radi nista ako nije selektovan tool 
+        	}
             handleDraw(x, y);
         }
         view.repaint();

@@ -248,7 +248,13 @@ public class FrmDrawing extends JFrame {
 
 		view.setBackground(Color.WHITE);
 		contentPane.add(view, BorderLayout.CENTER);
-
+		
+		btnShapes.clearSelection();
+		btnMode.clearSelection();
+		
+		controller.setMode(DrawingController.Mode.SELECT);
+		controller.setTool(DrawingController.Tool.NONE); // inicijalno pokretanje nije selektovan ni jedan alat pa je onemoguceno crtanje
+		
 		panel.repaint();
 	}
 
