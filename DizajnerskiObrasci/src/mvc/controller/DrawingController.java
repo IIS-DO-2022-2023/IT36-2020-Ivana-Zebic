@@ -15,6 +15,8 @@ import mvc.view.DrawingView;
 import ui.FrmDrawing;
 import ui.dialogs.DlgCircle;
 import ui.dialogs.DlgDonut;
+import ui.dialogs.DlgLine;
+import ui.dialogs.DlgPoint;
 import ui.dialogs.DlgRectangle;
 
 public class DrawingController {
@@ -191,6 +193,48 @@ public class DrawingController {
     }
     
     public void modifySelected() {
-        // ovo prebaciti sledeće: otvori odgovarajući dijalog sa setXxxNew(...)
+       Shape selected = model.getSelected();
+       if(selected == null) return;
+       
+       if(selected instanceof Point) {
+    	   DlgPoint dlg = new DlgPoint();
+    	   dlg.setPoint((Point) selected);
+    	   dlg.setModal(true);
+           dlg.setVisible(true);//DA LI IDE POSLIJE OVOG : panel_3.setBackground(activeColor);?????? 
+           view.repaint();
+           return; 
+       }
+       if(selected instanceof Line) {
+    	   DlgLine dlg = new DlgLine();
+    	   dlg.setLine((Line) selected);
+    	   dlg.setModal(true);
+    	   dlg.setVisible(true);
+    	   view.repaint();
+    	   return;
+       }
+       if(selected instanceof Rectangle) {
+    	   DlgRectangle dlg = new DlgRectangle();
+    	   dlg.setRectNew((Rectangle) selected);
+    	   dlg.setModal(true);
+    	   dlg.setVisible(true);
+    	   view.repaint();
+    	   return;
+       }
+       if(selected instanceof Donut) {
+    	   DlgDonut dlg = new DlgDonut();
+    	   dlg.setDonutNew((Donut) selected);
+    	   dlg.setModal(true);
+    	   dlg.setVisible(true);
+    	   view.repaint();
+    	   return;
+       }
+       if(selected instanceof Circle) {
+    	   DlgCircle dlg = new DlgCircle();
+    	   dlg.setCircleNew((Circle) selected);
+    	   dlg.setModal(true);
+    	   dlg.setVisible(true);
+    	   view.repaint();
+    	   return;
+       }
     }
 }

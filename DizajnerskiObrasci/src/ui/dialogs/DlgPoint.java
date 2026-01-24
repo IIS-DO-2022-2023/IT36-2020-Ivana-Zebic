@@ -187,7 +187,7 @@ public class DlgPoint extends JDialog {
 		this.point = point;
 		txtX.setText("" + point.getX());
 		txtY.setText("" + point.getY());
-		// contentPanel.setBackground(point.getColor());
+		//contentPanel.setBackground(point.getColor());
 	}
 
 }

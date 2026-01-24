@@ -16,20 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 
-import geometry.Circle;
-import geometry.Donut;
-import geometry.Line;
-import geometry.Point;
-import geometry.Rectangle;
 import geometry.Shape;
 import mvc.controller.DrawingController;
 import mvc.model.DrawingModel;
 import mvc.view.DrawingView;
-import ui.dialogs.DlgCircle;
-import ui.dialogs.DlgDonut;
-import ui.dialogs.DlgLine;
-import ui.dialogs.DlgPoint;
-import ui.dialogs.DlgRectangle;
 
 public class FrmDrawing extends JFrame {
 
@@ -169,56 +159,57 @@ public class FrmDrawing extends JFrame {
 		tglbtnSelect.addActionListener(e -> controller.setMode(DrawingController.Mode.SELECT));
 
 		JButton btnModify = new JButton("Modify");
-		btnModify.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Shape selected = model.getSelected();
-				if (selected != null) {
-					if (selected instanceof Point) {
-						Point point = (Point) selected;
-						DlgPoint dlg = new DlgPoint();
-						dlg.setPoint(point);
-						dlg.setModal(true);
-						dlg.setVisible(true);
-
-						panel_3.setBackground(activeColor);
-						panel_4.setBackground(activeInnerColor);
-					} else if (selected instanceof Line) {
-						Line line = (Line) selected;
-						DlgLine dlg = new DlgLine();
-						dlg.setLine(line);
-						dlg.setModal(true);
-						dlg.setVisible(true);
-						panel_3.setBackground(activeColor);
-						panel_4.setBackground(activeInnerColor);
-					} else if (selected instanceof Rectangle) {
-						Rectangle rectangle = (Rectangle) selected;
-						DlgRectangle dlg = new DlgRectangle();
-						dlg.setRectNew(rectangle);
-						dlg.setModal(true);
-						dlg.setVisible(true);
-						panel_3.setBackground(activeColor);
-						panel_4.setBackground(activeInnerColor);
-					} else if (selected instanceof Donut) {
-						Donut donut = (Donut) selected;
-						DlgDonut dlg = new DlgDonut();
-						dlg.setDonutNew(donut);
-						dlg.setModal(true);
-						dlg.setVisible(true);
-						panel_3.setBackground(activeColor);
-						panel_4.setBackground(activeInnerColor);
-					}else if (selected instanceof Circle) {
-						Circle circle = (Circle) selected;
-						DlgCircle dlg = new DlgCircle();
-						dlg.setCircleNew(circle);
-						dlg.setModal(true);
-						dlg.setVisible(true);
-						panel_3.setBackground(activeColor);
-						panel_4.setBackground(activeInnerColor);
-					} 
-				}
-				view.repaint();
-			}
-		});
+		btnModify.addActionListener(e -> controller.modifySelected());
+//		btnModify.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				Shape selected = model.getSelected();
+//				if (selected != null) {
+//					if (selected instanceof Point) {
+//						Point point = (Point) selected;
+//						DlgPoint dlg = new DlgPoint();
+//						dlg.setPoint(point);
+//						dlg.setModal(true);
+//						dlg.setVisible(true);
+//
+//						panel_3.setBackground(activeColor);
+//						panel_4.setBackground(activeInnerColor);
+//					} else if (selected instanceof Line) {
+//						Line line = (Line) selected;
+//						DlgLine dlg = new DlgLine();
+//						dlg.setLine(line);
+//						dlg.setModal(true);
+//						dlg.setVisible(true);
+//						panel_3.setBackground(activeColor);
+//						panel_4.setBackground(activeInnerColor);
+//					} else if (selected instanceof Rectangle) {
+//						Rectangle rectangle = (Rectangle) selected;
+//						DlgRectangle dlg = new DlgRectangle();
+//						dlg.setRectNew(rectangle);
+//						dlg.setModal(true);
+//						dlg.setVisible(true);
+//						panel_3.setBackground(activeColor);
+//						panel_4.setBackground(activeInnerColor);
+//					} else if (selected instanceof Donut) {
+//						Donut donut = (Donut) selected;
+//						DlgDonut dlg = new DlgDonut();
+//						dlg.setDonutNew(donut);
+//						dlg.setModal(true);
+//						dlg.setVisible(true);
+//						panel_3.setBackground(activeColor);
+//						panel_4.setBackground(activeInnerColor);
+//					}else if (selected instanceof Circle) {
+//						Circle circle = (Circle) selected;
+//						DlgCircle dlg = new DlgCircle();
+//						dlg.setCircleNew(circle);
+//						dlg.setModal(true);
+//						dlg.setVisible(true);
+//						panel_3.setBackground(activeColor);
+//						panel_4.setBackground(activeInnerColor);
+//					} 
+//				}
+//				view.repaint();
+//			}
+//		});
 		panel_1.add(btnModify);
 
 		JButton btnDelete = new JButton("Delete");
@@ -230,8 +221,9 @@ public class FrmDrawing extends JFrame {
 					int option = JOptionPane.showOptionDialog(null, "Are you sure?", "WARNING!", JOptionPane.OK_OPTION,
 							JOptionPane.ERROR_MESSAGE, null, options, options[0]);
 					if (option == 0) {
-						model.getShapes().remove(selected);
-						view.repaint();
+						controller.deleteSelected();
+//						model.getShapes().remove(selected);
+//						view.repaint();
 					}
 				}
 			}

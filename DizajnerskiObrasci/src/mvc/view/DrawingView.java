@@ -1,14 +1,10 @@
 package mvc.view;
 
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Iterator;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import geometry.Circle;
@@ -19,10 +15,6 @@ import geometry.Rectangle;
 import geometry.Shape;
 import mvc.controller.DrawingController;
 import mvc.model.DrawingModel;
-import ui.FrmDrawing;
-import ui.dialogs.DlgCircle;
-import ui.dialogs.DlgDonut;
-import ui.dialogs.DlgRectangle;
 
 public class DrawingView extends JPanel{
 	
