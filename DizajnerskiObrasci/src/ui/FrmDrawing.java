@@ -34,6 +34,7 @@ public class FrmDrawing extends JFrame {
 	private JToggleButton tglbtnRectangle;
 	private JToggleButton tglbtnCircle;
 	private JToggleButton tglbtnDonut;
+	private JToggleButton tglbtnHexagon;
 	private JToggleButton tglbtnDraw;
 
 	//private DrawingView pnlDrawing = new DrawingView(this);
@@ -107,6 +108,11 @@ public class FrmDrawing extends JFrame {
 		panel.add(tglbtnDonut);
 		btnShapes.add(tglbtnDonut);
 		tglbtnDonut.addActionListener(e -> controller.setTool(DrawingController.Tool.DONUT));
+		
+		tglbtnHexagon = new JToggleButton("Hexagon");
+		panel.add(tglbtnHexagon);
+		btnShapes.add(tglbtnHexagon);
+		tglbtnHexagon.addActionListener(e -> controller.setTool(DrawingController.Tool.HEXAGON));
 
 		//JPanel panel_3 = new JPanel();
 		JButton btnActiveEdgeColor = new JButton("Active Edge Color");

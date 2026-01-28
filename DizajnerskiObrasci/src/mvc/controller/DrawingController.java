@@ -6,6 +6,7 @@ import java.util.List;
 
 import geometry.Circle;
 import geometry.Donut;
+import geometry.HexagonAdapter;
 import geometry.Line;
 import geometry.Point;
 import geometry.Rectangle;
@@ -15,6 +16,7 @@ import mvc.view.DrawingView;
 import ui.FrmDrawing;
 import ui.dialogs.DlgCircle;
 import ui.dialogs.DlgDonut;
+import ui.dialogs.DlgHexagon;
 import ui.dialogs.DlgLine;
 import ui.dialogs.DlgPoint;
 import ui.dialogs.DlgRectangle;
@@ -26,7 +28,7 @@ public class DrawingController {
     private final FrmDrawing frame;
     
     public enum Mode {DRAW, SELECT}
-    public enum Tool {NONE, POINT, LINE, RECTANGLE, CIRCLE, DONUT}
+    public enum Tool {NONE, POINT, LINE, RECTANGLE, CIRCLE, DONUT, HEXAGON}
     
     private Mode mode = Mode.DRAW;
     private Tool tool = Tool.NONE;
@@ -138,6 +140,10 @@ public class DrawingController {
             case DONUT:
                 drawDonut(x, y);
                 break;
+                
+            case HEXAGON:
+                drawHexagon(x, y);
+                break;
         }
     }
     
@@ -184,6 +190,21 @@ public class DrawingController {
         }
     }
     
+    private void drawHexagon(int x, int y) {
+        ui.dialogs.DlgHexagon dlg = new ui.dialogs.DlgHexagon();
+        dlg.txtX.setText(Integer.toString(x));
+        dlg.txtY.setText(Integer.toString(y));
+        dlg.setVisible(true);
+
+        geometry.HexagonAdapter h = dlg.getHexagon();
+        if (h != null) {
+            // fallback na aktivne boje ako dijalog nije birao
+            if (h.getColor() == null) h.setColor(activeEdgeColor);
+            if (h.getInnerColor() == null) h.setInnerColor(activeInnerColor);
+            model.addShape(h);
+        }
+    }
+    
     public void deleteSelected() {
         Shape s = model.getSelected();
         if (s != null) {
@@ -200,7 +221,7 @@ public class DrawingController {
     	   DlgPoint dlg = new DlgPoint();
     	   dlg.setPoint((Point) selected);
     	   dlg.setModal(true);
-           dlg.setVisible(true);//DA LI IDE POSLIJE OVOG : panel_3.setBackground(activeColor);?????? 
+           dlg.setVisible(true);
            view.repaint();
            return; 
        }
@@ -236,5 +257,12 @@ public class DrawingController {
     	   view.repaint();
     	   return;
        }
+       if (selected instanceof HexagonAdapter) {
+    	    DlgHexagon dlg = new DlgHexagon();
+    	    dlg.setHexagon((HexagonAdapter) selected);
+    	    dlg.setVisible(true);
+    	    view.repaint();
+    	    return;
+    	}
     }
 }

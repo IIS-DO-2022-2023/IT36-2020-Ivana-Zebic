@@ -75,6 +75,8 @@ public class DrawingView extends JPanel{
 	            ((Donut) s).draw(g);
 	        } else if (s instanceof Circle) {
 	            ((Circle) s).draw(g);
+	        } else if (s instanceof geometry.HexagonAdapter) {
+	            ((geometry.HexagonAdapter) s).draw(g);
 	        }
 	    }
 	}
